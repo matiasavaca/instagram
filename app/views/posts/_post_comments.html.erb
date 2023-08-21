@@ -1,8 +1,10 @@
 <%= turbo_frame_tag "post#{post.id}comments" do %>
-  <% if post.comments.count > 0 %>
-    <a href="#" data-bs-toggle="modal" data-bs-target="#post<%= post.id%>_commentsModal" style="text-decoration:none">
-      <small class="text-muted">View all <%= pluralize(post.comments.count, "comments") %></small>
-    </a>
+  <% unless defined?(hide_comments_link) && hide_comments_link %>
+    <% if post.comments.count > 0 %>
+      <a href="#" data-bs-toggle="modal" data-bs-target="#post<%= post.id%>_commentsModal" style="text-decoration:none">
+        <small class="text-muted">View all <%= pluralize(post.comments.count, "comments") %></small>
+      </a>
+    <% end %>
   <% end %>
   <% post.comments.each do |comment| %>
     <p class="card-text m-0">

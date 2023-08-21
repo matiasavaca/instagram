@@ -35,28 +35,8 @@
 
 
     <div class="card-body">
-      <div id="carrousel<%= post.id %>" class="carousel slide">
-        <div class="carousel-inner">
-          <%= render 'posts/post_images', post: post %>
-        </div>
-        <% if post.images.count > 1 %>
-          <button class="carousel-control-prev " type="button" data-bs-target="#carrousel<%= post.id %>" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next " type="button" data-bs-target="#carrousel<%= post.id %>" data-bs-slide="next">
-            <span class="carousel-control-next-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        <% end %>
-        <% if post.images.count > 1 %>
-          <div class="carousel-indicators">
-            <% post.images.each_with_index do |image, index| %>
-              <button type="button" data-bs-target="#carrousel<%= post.id %>" data-bs-slide-to="<%= index %>" class="bg-dark <%= index== 0 ? 'active' : '' %>" <%= index == 0 ? 'aria-current="true"' : '' %> aria-label="Slide <%=index + 1%>"></button>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
+      <%= render 'posts/post_carrousel', post: post %>
+
       <%= render 'posts/post_actions', post: post %>
       <p class="card-text"><span class="fw-bold">
         <%= link_to post.user, class:"a-decoration-none", data: {turbo:false} do  %>
@@ -76,7 +56,7 @@
     <% end %>
   </div>
 </div>
-
+<%= render 'posts/post_modal', post: post, hide_comments_link: true %>
 
 <script>
   document.getElementById("carrousel<%= post.id %>").addEventListener("dblclick", function(){

@@ -1,23 +1,65 @@
 <div class="modal fade" id="post<%=post.id%>ModalToggle" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="postModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      <% post.images.each_with_index do |image, index| %>
-        <a href="#" data-bs-toggle="modal" data-bs-target="#postModalToggle">
-          <div class="carousel-item <%= index == 0 ? 'active' : '' %>" style="height: 25rem;">
-            <%= image_tag image, class: "d-block w-100" %>
+  <%= turbo_frame_tag "post#{post.id}modal" do %>
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content" style="height:50rem">
+        <div class="modal-body d-flex" style="overflow:auto">
+          <div class="border-end" style="width:45rem; height: 100%;">
+            <% post.images.each_with_index do |image, index| %>
+              <a href="#" data-bs-toggle="modal" data-bs-target="#post<%=post.id%>modalToggle">
+                <div class="carousel-item <%= index == 0 ? 'active' : '' %>" style="height: 100%;">
+                  <div id="carrousel<%= post.id %>Modal2" class="carousel slide" style="height: 100%;">
+                    <div class="carousel-inner" style="height: 100%;">
+                      <% post.images.each_with_index do |image, index| %>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#post<%=post.id%>ModalToggle">
+                          <div class="carousel-item <%= index == 0 ? 'active' : '' %>" style="height: 100%;">
+                            <%= image_tag image, class: "d-block w-100 h-100", style: "object-fit: contain;" %>
+                          </div>
+                        </a>
+                      <% end %>
+                    </div>
+                    <% if post.images.count > 1 %>
+                      <button class="carousel-control-prev " type="button" data-bs-target="#carrousel<%= post.id %>Modal2" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button class="carousel-control-next " type="button" data-bs-target="#carrousel<%= post.id %>Modal2" data-bs-slide="next">
+                        <span class="carousel-control-next-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                    <% end %>
+
+                    <% if post.images.count > 1 %>
+                      <div class="carousel-indicators">
+                        <% post.images.each_with_index do |image, index| %>
+                          <button type="button" data-bs-target="#carrousel<%= post.id %>" data-bs-slide-to="<%= index %>" class="bg-dark <%= index== 0 ? 'active' : '' %>" <%= index == 0 ? 'aria-current="true"' : '' %> aria-label="Slide <%=index + 1%>"></button>
+                        <% end %>
+                      </div>
+                    <% end %>
+                    </div>
+                  <%#= image_tag image, class: "d-flex w-100 justify-content-center align-items-center" %>
+                </div>
+              </a>
+            <% end %>
           </div>
-        </a>
-      <% end %>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+          <div class="p-4 d-flex" style="width:25rem">
+            <%= image_tag post.user.profile_picture.attached? ? post.user.profile_picture : 'profile_picture.jpg', class:"img-thumbnail rounded-circle", style: "width: 2.5rem; max-height: 2.5rem" %>
+            <div class="d-flex flex-column align-items-center m-2 ">
+              <small class="fw-bold" style="overflow: hidden; text-overflow: ellipsis; white-space:nowrap; max-width:10rem;">
+                <%= link_to post, class:"a-decoration-none", data: {turbo:false} do %>
+                  <%= post.user.username %>
+                <% end %>
+              </small>
+              <div class="mt-4 border-top w-100">
+                <%= render 'posts/post_comments', post: post %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
 </div>
