@@ -1,0 +1,8 @@
+// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
+import "@hotwired/turbo-rails"
+import "controllers"
+import "bootstrap"
+import "filepond"
+import 'custom/custom'
+import 'filepond-plugin-file-validate-type'
+import 'controllers/comments_controller'

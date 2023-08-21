@@ -1,0 +1,8 @@
+<% post.images.each_with_index do |image, index| %>
+  <a href="#" data-bs-toggle="modal" data-bs-target="#post<%=post.id%>ModalToggle">
+    <div class="carousel-item <%= index == 0 ? 'active' : '' %>" style="height: 25rem;">
+      <%= image_tag image, class: "d-block w-100" %>
+    </div>
+  </a>
+<% end %>
+<%= render 'posts/post_modal', post: post %>

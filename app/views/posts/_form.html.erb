@@ -1,0 +1,68 @@
+
+<div class="modal fade modal-lg" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog dialog-centered">
+    <%= form_with(model: post) do |form| %>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Create new post</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body d-flex">
+      <div>
+        <div class="border-end border-secondary mx-2" >
+          <div style="width:30rem">
+            <%= form.file_field :images, multiple: true, id:"post-images", required: true %>
+          </div>
+        </div>
+      </div>
+        <div style="width:40%">
+          <% if post.errors.any? %>
+            <div style="color: red">
+              <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+              <ul>
+                <% post.errors.each do |error| %>
+                  <li><%= error.full_message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <div class="my-2">
+            <%= image_tag current_user.profile_picture.attached? ? current_user.profile_picture : 'profile_picture.jpg', class:"img-thumbnail rounded-circle ", style: "width: 2.5rem" %>
+            <span class="fw-bold mx-2"><%= current_user.username %></span>
+          </div>
+          <div>
+            <%= form.text_area :caption, rows:8, placeholder: "Write a caption...", class: "form-control border-0", style:"resize:none"%>
+          </div>
+          <div>
+            <%= form.text_field :latitud, placeholder: "Add location", class: "form-control" %>
+          </div>
+
+        <div class="d-flex justify-content-between align-items-center border form-control my-2" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+          <a class="text-dark"  style="text-decoration:none">
+            Advanced Settings
+            <i class="fa-solid fa-chevron-down"></i>
+          </a>
+        </div>
+        <div class="collapse" id="collapseExample">
+          <div class="card card-body">
+            <div class="form-check form-switch">
+              <%= form.check_box :allow_comments, class:"form-check-input", role: "switch", checked: true %>
+              <%= form.label :allow_comments,style: "display: block", class:"form-check-label" %>
+            </div>
+            <div class="form-check form-switch">
+              <%= form.check_box :show_likes_count, class:"form-check-input", role: "switch", checked: true %>
+              <%= form.label :show_likes_count,style: "display: block", class:"form-check-label" %>
+            </div>
+          </div>
+      </div>
+        </div>
+    </div>
+      <div class="modal-footer">
+        <div>
+          <%= form.submit "Post", class: "btn btn-primary" %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<%= render "layouts/flash_messages" %>
+<div class="d-flex my-3 justify-content-center gap-5">
+  <div class="d-flex flex-column gap-3">
+    <%= render 'stories/story_list' %>
+    <div class="d-flex flex-column">
+      <% @feeds.each do |post| %>
+        <%= render 'posts/post', post: post %>
+      <% end %>
+    </div>
+  </div>
+  <%= render 'suggestions/suggestions_list', suggestions: @suggestions %>
+</div>

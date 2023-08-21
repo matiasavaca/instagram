@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "filepond": "^4.30.4",
+    "react-filepond": "^7.1.2"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.0.2"
+  }
+}

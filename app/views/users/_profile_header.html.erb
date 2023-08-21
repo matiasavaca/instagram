@@ -1,0 +1,22 @@
+<div class="container d-flex border-bottom justify-content-center align-items-center gap-5", style="min-height: 20rem">
+  <%= image_tag user.profile_picture.attached? ? user.profile_picture : 'profile_picture.jpg', class: "img-thumbnail rounded-circle w-25", style: "max-width: 8rem; max-height: 8rem" %>
+  <div class="w-50 d-flex flex-column gap-4">
+    <div class="d-flex gap-3 alignt-items-center">
+      <p class="m-0 fw-bold"><%= user.username %></p>
+      <button class="btn border border-1">Message</button>
+      <%= render 'layouts/shared/follow_state', user: user %>
+      <% if user == current_user %>
+        <%= link_to 'Edit profile', edit_user_registration_path, class: "btn btn-transparent border"%>
+      <% end %>
+    </div>
+    <div class="d-flex gap-5 alignt-items-center">
+      <small class="fw-bold"> <%= pluralize(user.posts.count, "post") %></small>
+      <small class="fw-bold"> <%= pluralize(user.followers.count, "follower") %></small>
+      <small class="fw-bold"> <%= pluralize(user.followings.count, "following") %></small>
+    </div>
+    <div class="d-flex flex-column">
+      <small class="fw-bold"><%= user.full_name.capitalize %></small>
+      <small ><%= user.bio %></small>
+    </div>
+  </div>
+</div>
