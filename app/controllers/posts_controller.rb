@@ -8,20 +8,6 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
-    @post = Post.find(params[:id])
-    if(@post.user == current_user)
-      @post.destroy
-    end
-
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(
-          "post#{@post.id}Modal",
-          partial: 'posts/post_comments',
-          locals: { post: @post }
-        )
-      end
-    end
   end
 
   # GET /posts/new

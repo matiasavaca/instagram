@@ -12,12 +12,8 @@
   </div>
 
   <% if current_user.waiting_followings.include?(suggestion) %>
-    <%= button_to cancel_request_path(user_id: suggestion.id), method: :delete, class: "btn bg-transparent border-0", data: {turbo:false} do %>
-      <small class="fw-bold text-secondary">Cancel</small>
-    <% end %>
+    <%= render 'suggestions/decline_suggestion_button', suggestion: suggestion %>
   <% else %>
-    <%= button_to follow_path(user_id: suggestion.id), method: :post, class: "btn bg-transparent border-0", data: {turbo:false} do %>
-      <small class="fw-bold text-primary">Follow</small>
-    <% end %>
+    <%= render 'suggestions/follow_suggestion_button', suggestion: suggestion %>
   <% end %>
 </div>

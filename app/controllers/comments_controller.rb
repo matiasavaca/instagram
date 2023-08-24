@@ -3,13 +3,8 @@ class CommentsController < ApplicationController
   def create
     @post.comments.create(user: current_user, body: params[:comment_body])
     respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(
-          "post#{@post.id}comments",
-          partial: 'posts/post_comments',
-          locals: { post: @post }
-        )
-      end
+      format.turbo_stream
+      format.html { redirect_to root_path }
     end
   end
 

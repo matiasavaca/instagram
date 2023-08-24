@@ -36,23 +36,16 @@
                       </div>
                     <% end %>
                     </div>
-                  <%#= image_tag image, class: "d-flex w-100 justify-content-center align-items-center" %>
                 </div>
               </a>
             <% end %>
           </div>
-          <div class="p-4 d-flex" style="width:25rem">
-            <%= image_tag post.user.profile_picture.attached? ? post.user.profile_picture : 'profile_picture.jpg', class:"img-thumbnail rounded-circle", style: "width: 2.5rem; max-height: 2.5rem" %>
-            <div class="d-flex flex-column align-items-center m-2 ">
-              <small class="fw-bold" style="overflow: hidden; text-overflow: ellipsis; white-space:nowrap; max-width:10rem;">
-                <%= link_to post, class:"a-decoration-none", data: {turbo:false} do %>
-                  <%= post.user.username %>
-                <% end %>
-              </small>
-              <div class="mt-4 border-top w-100">
-                <%= render 'posts/post_comments', post: post %>
-              </div>
+          <div class="p-4" style="width:25rem; overflow-y:scroll">
+            <div>
             </div>
+            <% post.comments.each do |comment| %>
+              <%= render 'posts/modal_comment', comment: comment %>
+            <% end %>
           </div>
         </div>
         <div class="modal-footer">
