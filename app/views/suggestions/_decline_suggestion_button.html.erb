@@ -1,0 +1,3 @@
+<%= button_to cancel_request_path(user_id: suggestion.id), method: :delete, class: "btn bg-transparent border-0", data: { "turbo-action": "replace", "turbo-frame": "follows_list" } do %>
+  <small class="fw-bold text-secondary">Cancel</small>
+<% end %>

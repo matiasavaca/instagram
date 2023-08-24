@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
+  resources :rooms do
+    resources :messages
+  end
+
   # Defines the root path route ("/")
   root 'home#index'
   post 'toggle_like', to: 'likes#toggle_like', as: :toggle_like

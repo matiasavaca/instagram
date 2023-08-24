@@ -3,7 +3,10 @@ class FollowsController < ApplicationController
   before_action :set_follow_req, only: %i[accept_follow decline_follow]
   def follow
     current_user.follow(@user)
-    redirect_back(fallback_location: root_path)
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_back(fallback_location: root_path) }
+    end
   end
 
   def cancel_request

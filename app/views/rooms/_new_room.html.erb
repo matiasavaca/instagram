@@ -1,0 +1,10 @@
+<%= form_with(model: @room, method: :post, remote: true, data: { controller: "rooms", action: "turbo:submit-end->rooms#clear" }, class: 'd-flex card-footer justify-content-between bg-white') do |f| %>
+
+  <!-- Campo de texto para el nombre de la sala. He combinado las clases de ambos formularios originales. -->
+  <% f.hidden_field :user_id, value: current_user.id %>
+  <%= f.text_field :name, class: "form-control w-75", placeholder:"Add Room...", autocomplete:'off', style:"border:none" %>
+
+  <!-- Botón de envío -->
+  <%= f.submit "Create Room", class:"text-primary fw-bold", data: {disable_with: false}, style:"background:none; border:none" %>
+
+<% end %>

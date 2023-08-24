@@ -4,6 +4,11 @@ class User < ApplicationRecord
   devise  :database_authenticatable, :registerable,
           :recoverable, :rememberable, :validatable
 
+  scope :all_except, ->(user) { where.not(id: user) }
+  after_create_commit { broadcast_prepend_to "users" }
+
+  has_many :rooms, dependent: :destroy
+  has_many :messages, dependent: :destroy
   has_many :posts
   has_many :likes
   has_one_attached :profile_picture
@@ -14,8 +19,8 @@ class User < ApplicationRecord
   has_many :accepted_recieved_requests, -> { where accepted: true }, class_name: 'Follow', foreign_key: 'followed_id'
   has_many :accepted_sent_requests, -> { where accepted: true }, class_name: 'Follow', foreign_key: 'follower_id'
 
-  # has_many :recieved_requests, class_name: 'Follow', foreign_key: 'followed_id'
-  # has_many :sent_requests, class_name: 'Follow', foreign_key: 'follower_id'
+
+
   has_many :waiting_sent_requests, -> { where accepted: false }, class_name: 'Follow', foreign_key: 'follower_id'
 
   has_many :followers, through: :accepted_recieved_requests, source: :follower
@@ -25,6 +30,7 @@ class User < ApplicationRecord
   def follow(user)
     Follow.create(follower: self, followed: user)
   end
+
 
   def unfollow(user)
     self.accepted_sent_requests.find_by(followed: user)&.destroy
