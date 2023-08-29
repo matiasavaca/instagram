@@ -4,8 +4,10 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   resources :rooms do
+    get 'direct_message/:user_id', to: 'users#direct_message', on: :collection, as: :direct_message
     resources :messages
   end
+
 
   # Defines the root path route ("/")
   root 'home#index'

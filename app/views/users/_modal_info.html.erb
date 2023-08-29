@@ -1,0 +1,15 @@
+<div class="modal fade" id="user<%= current_user.id%>_infoModal" tabindex="-1" aria-labelledby="user<%= current_user.id%>_infoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="user<%= current_user.id%>_infoModalLabel">Informacion sobre tu cuenta</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <div class="d-flex flex-column gap-3">
+        <%= render 'users/user_information', user: current_user %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

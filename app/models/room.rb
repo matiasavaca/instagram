@@ -11,13 +11,18 @@ class Room < ApplicationRecord
   end
 
   def broadcast_if_public
-    broadcast_append_to 'rooms' unless self.is_private
+    broadcast_prepend_to 'rooms' unless self.is_private
   end
 
-  def self.create_private_room(users, room_name)
-    single_room = Room.create(name: room_name, is_private: true)
-    users.each do |user|
-      Participant.create(user_id: user.id, room_id: single_room.id)
+  def self.create_private_room(users, room_name, primary_user)
+    single_room = Room.new(name: room_name, is_private: true, user: primary_user)
+    if single_room.valid?
+      single_room.save
+      users.each do |user|
+        Participant.create(user_id: user.id, room_id: single_room.id)
+      end
+    else
+      Rails.logger.error("Failed to create private room. Errors: #{single_room.errors.full_messages.join(', ')}")
     end
     single_room
   end

@@ -1,0 +1,17 @@
+<div class="modal fade" id="user<%= user.id%>_followingModal" tabindex="-1" aria-labelledby="user<%= user.id%>_followingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="user<%= user.id%>_followingModalLabel">Followings</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <div class="d-flex flex-column gap-3">
+          <% user.followings.each do |following| %>
+            <%= render "follows/followings", following: following %>
+          <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

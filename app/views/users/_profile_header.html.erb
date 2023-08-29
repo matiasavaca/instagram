@@ -2,8 +2,12 @@
   <%= image_tag user.profile_picture.attached? ? user.profile_picture : 'profile_picture.jpg', class: "img-thumbnail rounded-circle w-25", style: "max-width: 8rem; max-height: 8rem" %>
   <div class="w-50 d-flex flex-column gap-4">
     <div class="d-flex gap-3 alignt-items-center">
-      <p class="m-0 fw-bold"><%= user.username %></p>
-      <button class="btn border border-1">Message</button>
+      <a href="#" data-bs-toggle="modal" data-bs-target="#user<%= user.id%>_infoModal" style="text-decoration:none" class="text-dark">
+        <small class="fw-bold fs-6" ><%= user.username %></small>
+      </a>
+      <% if user.followers.include?(current_user) %>
+        <%= link_to 'Message', direct_message_rooms_path(user), class: "btn border border-1"%>
+      <% end %>
       <%= render 'layouts/shared/follow_state', user: user %>
       <% if user == current_user %>
         <%= link_to 'Edit profile', edit_user_registration_path, class: "btn btn-transparent border"%>
@@ -11,8 +15,12 @@
     </div>
     <div class="d-flex gap-5 alignt-items-center">
       <small class="fw-bold"> <%= pluralize(user.posts.count, "post") %></small>
-      <small class="fw-bold"> <%= pluralize(user.followers.count, "follower") %></small>
-      <small class="fw-bold"> <%= pluralize(user.followings.count, "following") %></small>
+      <a href="#" data-bs-toggle="modal" data-bs-target="#user<%= user.id%>_followersModal" style="text-decoration:none" class="text-dark">
+        <small class="fw-bold" ><%= pluralize(user.followers.count, "followers")%></small>
+      </a>
+      <a href="#" data-bs-toggle="modal" data-bs-target="#user<%= user.id%>_followingModal" style="text-decoration:none" class="text-dark">
+        <small class="fw-bold" ><%= pluralize(user.followings.count, "following")%></small>
+      </a>
     </div>
     <div class="d-flex flex-column">
       <small class="fw-bold"><%= user.full_name.capitalize %></small>
@@ -20,3 +28,7 @@
     </div>
   </div>
 </div>
+
+<%= render 'follows/modal_followers', user: user %>
+<%= render 'follows/modal_followings', user: user%>
+<%= render 'users/modal_info'%>

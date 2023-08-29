@@ -36,7 +36,6 @@
 
     <div class="card-body">
       <%= render 'posts/post_carrousel', post: post %>
-
       <%= render 'posts/post_actions', post: post %>
       <p class="card-text"><span class="fw-bold">
         <%= link_to post.user, class:"a-decoration-none", data: {turbo:false} do  %>
@@ -44,6 +43,7 @@
         <% end %>
         </span> <%= post.caption %>
       </p>
+      
       <%= render "posts/post_comments", post: post %>
       <small class="text-muted"><%= time_ago_in_words(post.created_at) %></small>
     </div>

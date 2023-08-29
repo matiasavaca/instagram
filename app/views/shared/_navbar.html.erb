@@ -37,7 +37,9 @@
           <%= turbo_stream_from "follows_list" %>
             <div id="navbar_follow">
               <% current_user.follow_requests.each do |follow_req| %>
-                <%= render 'follows/follow', follow: follow_req %>
+                <% if follow_req.followed == current_user && !follow_req.follower.private? %>
+                  <%= render 'follows/follow', follow: follow_req %>
+                <% end %>
               <% end %>
             </div>
           </ul>

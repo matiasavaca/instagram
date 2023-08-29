@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show]
+  before_action :set_user, only: %i[show direct_message]
+  helper_method :get_name
 
   def index
     if params[:search_query].present?
@@ -9,29 +10,31 @@ class UsersController < ApplicationController
     end
 
     if turbo_frame_request?
-      render partial: 'layouts/search_results',locals: {users: @users}
+      render partial: 'layouts/search_results', locals: {users: @users}
     end
   end
 
   def show
   end
 
-  def show_messages
+  def direct_message
     @users = User.all_except(current_user)
 
     @room = Room.new
     @rooms = Room.public_rooms
-    @room_name =get_name(@user, current_user)
-    @single_room = Room.where(name: @room_name).first || Room.create_private_room([@user, current_user], @room_name)
+    @room_name = get_name(@user, current_user)
+    @single_room = Room.where(name: @room_name).first || Room.create_private_room([@user, current_user], @room_name, current_user)
 
     @messages = @single_room.messages.order(created_at: :asc)
+    @message = Message.new
     render 'rooms/index'
+
   end
 
   private
 
   def set_user
-    @user = User.find(params[:id])
+    @user = User.find(params[:id] || params[:user_id])
   end
 
   def get_name(user1, user2)

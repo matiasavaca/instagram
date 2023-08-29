@@ -1,4 +1,19 @@
 <%= turbo_stream_from "room"%>
-  <div id="room<%=room.id%>" >
-    <%= link_to room.name, room, class:"text-dark", style:"text-decoration:none"%>
-  </div>
+  <div class="d-flex justify-content-between" style="margin-bottom:4px">
+      <div class="d-flex">
+        <%= image_tag 'profile_picture.jpg', class:"img-thumbnail rounded-circle ", style: "width: 2.5rem; max-height: 2.5rem" %>
+        <div class="d-flex flex-column mx-3 justify-content-center">
+          <small class="fw-bold" style="overflow: hidden; text-overflow: ellipsis; white-space:nowrap max-width:10rem;">
+            <%= link_to room.name, room_path(room), class:"text-decoration-none text-dark fw-light fs-6", data: {turbo:false} %>
+          </small>
+          <div>
+            <% if room.messages.any? %>
+            <small><%= room.messages.last.body %></small>
+              <small class="text-muted" style="margin-left: 1rem;"> - <%= time_ago_in_words(room.messages.last.created_at).gsub('about ', '') %></small>
+            <% else %>
+                <small>No messages</small>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>

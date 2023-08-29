@@ -24,7 +24,6 @@ class RoomsController < ApplicationController
     @room = Room.new
     @rooms = Room.public_rooms.reverse
 
-
     @message = Message.new
     @messages = @single_room.messages.order(created_at: :desc)
 
@@ -36,9 +35,5 @@ class RoomsController < ApplicationController
 
   def room_params
     params.require(:room).permit(:name, :user_id)
-  end
-
-  def method_name
-
   end
 end

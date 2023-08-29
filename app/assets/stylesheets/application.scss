@@ -20,7 +20,6 @@
 @import "font-awesome";
 @import "filepond";
 
-
 .body-room{
   overflow: hidden;
 }
@@ -37,11 +36,18 @@
 
 #messages {
   height: calc(100vh - 150px);
+  flex: 1;
+  overflow-y: auto;
 }
 
 #room_container{
+  display: flex;
+  flex-direction: column;
   height: 100vh;
+  overflow-x: hidden;
+  overflow-y: hidden;//tiene que ser auto
   margin-right: 0px !important;
+  padding-bottom: 400px;
 }
 
 #side_panel {
@@ -64,6 +70,7 @@
 }
 
 .message-box{
+  position: relative;
   word-wrap: break-word;
   width: fit-content;
   max-width: 40%;
@@ -72,4 +79,12 @@
   margin-bottom: 10px;
   background-color: #555555;
   padding: 10px;
+}
+
+.message-time {
+  position: absolute;  /* take the time out of the flow and position according to the closest relative/absolute/fixed container */
+  bottom: 0;           /* push it to the bottom */
+  right: 0;            /* push it to the right */
+  font-size: 0.8rem;   /* optional: reduce the font-size a bit if you want */
+  padding-right: 3px;
 }

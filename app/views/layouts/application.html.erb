@@ -25,7 +25,8 @@
 
   </head>
 
-  <body>
+  <body class="app-container <%= controller_name %>"
+      style="<%= 'overflow-y: hidden;' if controller_name == 'rooms' || (controller_name == 'users' && action_name == 'direct_message') %>">
     <% if current_user %>
       <%= render 'shared/navbar' %>
     <% end %>

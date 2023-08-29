@@ -1,0 +1,20 @@
+<div>
+  <div class="d-flex justify-content-center m-auto">
+    <div class="d-flex flex-column align-items-center justify-content-center">
+        <%= image_tag user.profile_picture.attached? ? user.profile_picture : 'profile_picture.jpg', class: "img-thumbnail rounded-circle w-25", style: "max-width: 25rem; max-height: 25rem" %>
+        <small class="fw-bold mt-2" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 10rem;"><%= user.username %></small>
+    </div>
+  </div>
+  <div class="d-flex text-center text-muted p-3" style="font-size: 14px">
+    </small >
+    Para ayudar a mantener la autenticidad de nuestra comunidad, mostramos información sobre las cuentas en Instagram. Para verla, las personas deben tocar ••• en tu perfil y elegir "Información sobre esta cuenta".Conoce por qué esta información es importante.
+    <small>
+  </div>
+  <div class="d-flex flex-row">
+      <i class="fa-solid fa-calendar-days fs-3 p-3" style="color: #000000;"></i>
+    <div class="d-flex flex-column p-2">
+      <small class="fs-6">Fecha en que se unio</small>
+      <small><%= user.created_at.strftime('%B de %Y') %></small>
+    </div>
+  </div>
+</div>
