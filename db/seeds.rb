@@ -15,3 +15,5 @@ User.create(email: "agop123@gmail.com", full_name: "agop chorba", username: "pow
 
 
 User.create(email: "carlos@gmail.com", full_name: "carlos avaca", username: "carlitos", password: "123456")
+
+

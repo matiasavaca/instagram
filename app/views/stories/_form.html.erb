@@ -1,0 +1,42 @@
+<div class="modal fade modal-lg" id="newStoryModal" tabindex="-1" aria-labelledby="newStoryModalLabel" aria-hidden="true">
+  <div class="modal-dialog dialog-centered">
+    <%= form_with(model: story) do |form| %>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="newStoryModalLabel">Create new story</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body d-flex">
+      <div class="border-end border-secondary  mx-4">
+        <div >
+          <div style="width:30rem">
+            <%= form.file_field :images, multiple: true, id:"story-images", required: true %>
+          </div>
+        </div>
+      </div>
+        <div style="width:40%">
+          <% if story.errors.any? %>
+            <div style="color: red">
+              <h2><%= pluralize(story.errors.count, "error") %> prohibited this story from being saved:</h2>
+              <ul>
+                <% story.errors.each do |error| %>
+                  <li><%= error.full_message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <div class="my-2">
+            <%= image_tag current_user.profile_picture.attached? ? current_user.profile_picture : 'profile_picture.jpg', class:"img-thumbnail rounded-circle ", style: "width: 2.5rem" %>
+            <span class="fw-bold mx-2"><%= current_user.username %></span>
+          </div>
+        </div>
+    </div>
+      <div class="modal-footer">
+        <div>
+          <%= form.submit "Story", class: "btn btn-primary" %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

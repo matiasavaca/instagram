@@ -3,6 +3,7 @@ class HomeController < ApplicationController
   before_action :set_feeds
   def index
     @posts = Post.all
+    @stories = Story.all
   end
 
   private

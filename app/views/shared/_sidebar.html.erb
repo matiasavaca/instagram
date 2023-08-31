@@ -52,6 +52,12 @@
         </a>
       </li>
       <li class="nav-item mt-3">
+        <a type="button" class="text-dark nav-link" data-bs-toggle="modal" data-bs-target="#newStoryModal">
+          <i class="fa-solid fa-square-plus fa-xl"></i>
+          <span>Crear</span>
+        </a>
+      </li>
+      <li class="nav-item mt-3">
         <div class="other-item offcanva">
           <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-backdrop="false" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
             <i class="fa-regular fa-heart fa-xl"></i>
@@ -108,3 +114,4 @@
 </nav>
 
 <%= render 'posts/form', post: Post.new %>
+<%= render 'stories/form', story: Story.new %>

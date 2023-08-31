@@ -1,5 +1,5 @@
 <div class="card d-flex flex-row justify-content-center align-items-center gap-3 px-3" style="width:28rem; height: 7rem; overflow-x:scroll; border:none">
-  <% (0..8).each do %>
-    <%= render 'stories/story' %>
+  <% @stories.each do |story| %>
+    <%= render 'stories/story', story: story %>
   <% end %>
 </div>

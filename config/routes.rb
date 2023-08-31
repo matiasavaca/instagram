@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root 'home#index'
+  resources :stories
   post 'toggle_like', to: 'likes#toggle_like', as: :toggle_like
   resources :comments, only: %i[create destroy]
   resources :users, only: %i[show index]
