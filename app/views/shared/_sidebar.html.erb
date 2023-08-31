@@ -54,7 +54,7 @@
       <li class="nav-item mt-3">
         <a type="button" class="text-dark nav-link" data-bs-toggle="modal" data-bs-target="#newStoryModal">
           <i class="fa-solid fa-square-plus fa-xl"></i>
-          <span>Crear</span>
+          <span>Crear Stories</span>
         </a>
       </li>
       <li class="nav-item mt-3">
@@ -105,7 +105,10 @@
             <% end %>
           </li>
           <li>
-            <%= button_to 'Log out', destroy_user_session_path,class:"dropdown-item", method: :delete %>
+            <%= button_to destroy_user_session_path,class:"dropdown-item", method: :delete do %>
+            <i class="fa-solid fa-arrow-right-from-bracket" style="color: #000000;"></i>
+            <span>Log out</span>
+            <% end %>
           </li>
         </ul>
       </div>

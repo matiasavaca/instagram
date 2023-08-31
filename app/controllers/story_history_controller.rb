@@ -1,0 +1,2 @@
+class StoryHistoryController < ApplicationController
+end

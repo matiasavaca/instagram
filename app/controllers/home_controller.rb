@@ -4,6 +4,14 @@ class HomeController < ApplicationController
   def index
     @posts = Post.all
     @stories = Story.all
+
+    if user_signed_in?
+      @stories.each do |story|
+        unless StoryHistory.exists?(user: current_user, story: story)
+          StoryHistory.create(user: current_user, story: story)
+        end
+      end
+    end
   end
 
   private

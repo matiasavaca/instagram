@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_31_195825) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_31_224142) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -119,6 +119,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_31_195825) do
     t.index ["user_id"], name: "index_stories_on_user_id"
   end
 
+  create_table "story_histories", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "story_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["story_id"], name: "index_story_histories_on_story_id"
+    t.index ["user_id"], name: "index_story_histories_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -149,4 +158,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_31_195825) do
   add_foreign_key "posts", "users"
   add_foreign_key "rooms", "users"
   add_foreign_key "stories", "users"
+  add_foreign_key "story_histories", "stories"
+  add_foreign_key "story_histories", "users"
 end

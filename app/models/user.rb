@@ -39,4 +39,8 @@ class User < ApplicationRecord
   def cancel_request(user)
     self.waiting_sent_requests.find_by(followed: user)&.destroy
   end
+
+  def viewed_stories
+    story_histories.map(&:story)
+  end
 end

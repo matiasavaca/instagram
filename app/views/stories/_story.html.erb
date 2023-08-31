@@ -27,6 +27,13 @@
           </div>
         <% end %>
       </div>
+
+      <h3>Viewers:</h3>
+        <ul>
+          <% story.viewers.each do |user| %>
+            <li><%= user.username %></li> <!-- replace 'name' with whatever attribute you want to display for the user -->
+          <% end %>
+        </ul>
     </div>
   </div>
 </div>
