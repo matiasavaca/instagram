@@ -24,12 +24,17 @@
   </style>
 
   </head>
+  <body class="app-container users bg-white" style="<%= 'overflow-y: hidden;' if controller_name == 'rooms' || (controller_name == 'users' && action_name == 'direct_message') %>">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-2 border-end">
+          <%= render 'shared/sidebar' %>
+        </div>
+        <div class="col-10 mt-5" >
+          <%= yield %>
+        </div>
+      </div>
+    </div>
 
-  <body class="app-container <%= controller_name %>"
-      style="<%= 'overflow-y: hidden;' if controller_name == 'rooms' || (controller_name == 'users' && action_name == 'direct_message') %>">
-    <% if current_user %>
-      <%= render 'shared/navbar' %>
-    <% end %>
-    <%= yield %>
   </body>
 </html>
