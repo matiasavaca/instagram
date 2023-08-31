@@ -1,4 +1,32 @@
 <div class="d-flex flex-column justify-content-center align-items-center">
-  <%= image_tag 'profile_picture.jpg', class:"img-thumbnail rounded-circle border-2 border-primary ", style: "width: 3.5rem" %>
-  <small style="max-width:3.5rem; overflow:hidden; white-space:nowrap; text-overflow:ellipsis">Username</small>
+  <button type="button" class="btn m-0" data-bs-toggle="modal" data-bs-target="#storyModal<%= story.id%>">
+    <%= image_tag 'profile_picture.jpg', class:"img-thumbnail rounded-circle border-2 border-primary ", style: "width: 3.5rem" %>
+    <div>
+      <small style="max-width:3.5rem; overflow:hidden; white-space:nowrap; text-overflow:ellipsis"><%=story.user.username%></small>
+    </div>
+  </button>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="storyModal<%= story.id%>" tabindex="-1" aria-labelledby="storyModal<%= story.id%>Label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-body">
+        <% story.images.each do |image| %>
+          <%= image_tag image, class: "d-block w-100 full-modal-image" %>
+        <% end %>
+      </div>
+      <div>
+        <%= form_with url: comments_path, method: :post, data: { controller: "comments", action: "turbo:submit-end->comments#clear" } do |f| %>
+          <div class="d-flex">
+            <%= f.hidden_field :story_id, value: story.id %>
+            <%= f.text_area :story_message, class: "w-100", placeholder:"Add comment...", style:"border:none; margin: 2rem"  %>
+            <%= f.submit "Post", class:"text-primary fw-bold", style:"background:none; border:none" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

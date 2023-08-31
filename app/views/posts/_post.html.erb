@@ -1,5 +1,5 @@
 <div class="my-3" id="<%= dom_id post %>">
-  <div class="card" style="width: 24rem;">
+  <div class=" border-bottom" style="width: 28rem;">
     <div class="card-header bg-white">
       <div class="d-flex justify-content-between">
         <div>
@@ -33,17 +33,16 @@
       </div>
     </div>
 
-
     <div class="card-body">
       <%= render 'posts/post_carrousel', post: post %>
       <%= render 'posts/post_actions', post: post %>
-      <p class="card-text"><span class="fw-bold">
+      <p class="card-text m-0"><span class="fw-bold">
         <%= link_to post.user, class:"a-decoration-none", data: {turbo:false} do  %>
           <%= post.user.username %>
         <% end %>
         </span> <%= post.caption %>
       </p>
-      
+
       <%= render "posts/post_comments", post: post %>
       <small class="text-muted"><%= time_ago_in_words(post.created_at) %></small>
     </div>

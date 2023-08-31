@@ -1,0 +1,117 @@
+<nav class="sidebar">
+  <div class="sidebar-content">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <%= link_to root_path, class:"navbar-brand nav-link m-5" do %>
+          <%= image_tag 'logo.png', width: '100rem' %>
+        <% end %>
+      </li>
+      <li class="nav-item ">
+        <%= link_to root_path, class:"text-dark nav-link" do %>
+          <i class="fa-solid fa-house fa-xl"></i>
+          <span>Inicio</span>
+        <% end %>
+      </li>
+      <li class="nav-item mt-3">
+        <div class="nav-link">
+          <button class="navbar-toggler btn" type="button" data-bs-backdrop="false" data-bs-toggle="offcanvas" data-bs-target="#offcanvassearchScrolling" aria-controls="offcanvassearchScrolling">
+            <i class="fa-solid fa-magnifying-glass fa-xl" style="color: #000000;"></i>
+            <span>Buscar</span>
+          </button>
+          <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvassearchScrolling" aria-labelledby="offcanvassearchScrolling" style="left: 8.5%">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvassearchScrolling">Buscar</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body p-4 ">
+              <div class="d-flex">
+                <%= form_with url: users_path, method: :get, data: {turbo_frame: 'search_results', controller: "search-results"}, class: "d-flex" do |f| %>
+                  <div>
+                    <%= f.text_field :search_query, class:"form-control me-2 border-0", type:"search", placeholder: "Search", "aria-label"=>"Search", style:"background: #efefef","data-bs-toggle"=>"dropdown", "aria-expanded"=>"false", data: {action: "input->search-results#search"} %>
+                    <ul class="p-4 mt-2" style="width:22rem">
+                      <%= render 'layouts/search_results', users: [] %>
+                    </ul>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item mt-3">
+        <%= link_to rooms_path, class:"text-dark nav-link" do%>
+          <i class="fa-brands fa-facebook-messenger fa-xl"></i>
+          <span>Mensajes</span>
+        <% end %>
+      </li>
+      <li class="nav-item mt-3">
+        <a type="button" class="text-dark nav-link" data-bs-toggle="modal" data-bs-target="#newPostModal">
+          <i class="fa-solid fa-square-plus fa-xl"></i>
+          <span>Crear</span>
+        </a>
+      </li>
+      <li class="nav-item mt-3">
+        <a type="button" class="text-dark nav-link" data-bs-toggle="modal" data-bs-target="#newStoryModal">
+          <i class="fa-solid fa-square-plus fa-xl"></i>
+          <span>Crear</span>
+        </a>
+      </li>
+      <li class="nav-item mt-3">
+        <div class="other-item offcanva">
+          <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-backdrop="false" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+            <i class="fa-regular fa-heart fa-xl"></i>
+            <span>Notificaciones</span>
+          </button>
+          <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel" style="left: 8.5%">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Follows List</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body p-4">
+              <%= turbo_stream_from "follows_list" %>
+              <div id="navbar_follow">
+                <% current_user.follow_requests.each do |follow_req| %>
+                  <% if follow_req.followed == current_user && !follow_req.follower.private? %>
+                    <%= render 'follows/follow', follow: follow_req %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item mt-3">
+          <%= link_to user_path(current_user), class:"text-dark nav-link" do%>
+          <%= image_tag current_user.profile_picture.attached? ? current_user.profile_picture : 'profile_picture.jpg', class: "img-thumbnail rounded-circle", style: "max-width: 2.5rem; max-height: 2.5rem" %>
+          <span>Perfil</span>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+    <ul class="nav flex-column">
+      <li class="nav-item ">
+        <div class="dropdown">
+        <a class="nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa-solid fa-bars fa-xl" style="color: #000000;"></i>
+          <span>Mas</span>
+        </a>
+        <ul class="dropdown-menu">
+
+          <li class="nav-item">
+            <%= link_to edit_user_registration_path,class:"dropdown-item" do %>
+              <i class="fa-solid fa-gear" style="color: #000000;"></i>
+              <span>Configuracion</span>
+            <% end %>
+          </li>
+          <li>
+            <%= button_to 'Log out', destroy_user_session_path,class:"dropdown-item", method: :delete %>
+          </li>
+        </ul>
+      </div>
+      </li>
+    </ul>
+</nav>
+
+<%= render 'posts/form', post: Post.new %>
+<%= render 'stories/form', story: Story.new %>
