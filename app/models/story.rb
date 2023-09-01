@@ -13,5 +13,4 @@ class Story < ApplicationRecord
   def last_image
     images.last
   end
-
 end

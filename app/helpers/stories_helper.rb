@@ -15,9 +15,9 @@ module StoriesHelper
 
   def next_story_id(story_id)
     # Find the next story ID.
-    next_story_id = Story.where('id > ?', story_id).first.id
+    next_story = Story.where('id > ?', story_id).first
 
-    # Return the next story ID.
-    return next_story_id
+    # Return the next story ID if it exists, otherwise return nil.
+    return next_story&.id
   end
 end

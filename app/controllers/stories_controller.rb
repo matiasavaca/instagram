@@ -11,8 +11,14 @@ class StoriesController < ApplicationController
   end
 
   def create
-    @story = Story.new(story_params)
-    @story.user = current_user
+    @story = current_user.stories.last
+    if @story.nil?
+      @story = Story.new(story_params)
+      @story.user = current_user
+    else
+      @story.images.attach(story_params[:images])
+    end
+
     respond_to do |format|
       if @story.save
         format.html { redirect_to root_path, notice: "Story was successfully created." }
