@@ -7,7 +7,7 @@ class HomeController < ApplicationController
     @stories = Story.all
 
     @last_image_story = Story.first&.last_image
-    
+
     @last_images_for_posts = {}
     @posts.each do |post|
       @last_images_for_posts[post.id] = post.last_image
@@ -21,6 +21,12 @@ class HomeController < ApplicationController
         end
       end
     end
+  end
+
+  def next_user_with_story
+    current_story_user_id = params[:current_user_id].to_i
+    next_user = User.joins(:stories).where("users.id > ?", current_story_user_id).order("users.id ASC").first
+    render json: { next_user_id: next_user&.id }
   end
 
   private
