@@ -1,22 +1,47 @@
 <div id="carrousel<%= post.id %>" class="carousel slide">
-        <div class="carousel-inner">
-          <%= render 'posts/post_images', post: post %>
-        </div>
-        <% if post.images.count > 1 %>
-          <button class="carousel-control-prev " type="button" data-bs-target="#carrousel<%= post.id %>" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next " type="button" data-bs-target="#carrousel<%= post.id %>" data-bs-slide="next">
-            <span class="carousel-control-next-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        <% end %>
-        <% if post.images.count > 1 %>
-          <div class="carousel-indicators">
-            <% post.images.each_with_index do |image, index| %>
-              <button type="button" data-bs-target="#carrousel<%= post.id %>" data-bs-slide-to="<%= index %>" class="bg-dark <%= index== 0 ? 'active' : '' %>" <%= index == 0 ? 'aria-current="true"' : '' %> aria-label="Slide <%=index + 1%>"></button>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
+  <div class="carousel-inner">
+    <%= render 'posts/post_images', post: post %>
+  </div>
+  <% if post.images.count > 1 %>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carrousel<%= post.id %>" data-bs-slide="prev" style="display: none;">
+      <span class="carousel-control-prev-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+
+    <!-- Only one instance of "Next" button -->
+    <button class="carousel-control-next" type="button" data-bs-target="#carrousel<%= post.id %>" data-bs-slide="next">
+      <span class="carousel-control-next-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  <% end %>
+  <% if post.images.count > 1 %>
+    <div class="carousel-indicators">
+      <% post.images.each_with_index do |image, index| %>
+        <button type="button" data-bs-target="#carrousel<%= post.id %>" data-bs-slide-to="<%= index %>" class="bg-dark <%= index== 0 ? 'active' : '' %>" <%= index == 0 ? 'aria-current="true"' : '' %> aria-label="Slide <%=index + 1%>"></button>
+      <% end %>
+    </div>
+  <% end %>
+
+  <script>
+    document.querySelectorAll('.carousel').forEach(carousel => {
+        carousel.addEventListener('slid.bs.carousel', function (e) {
+            let prevButton = this.querySelector('.carousel-control-prev');
+            let nextButton = this.querySelector('.carousel-control-next');
+
+            // Hide "Previous" button for the first slide
+            if (e.to === 0) {
+                prevButton.style.display = 'none';
+            } else {
+                prevButton.style.display = 'block';
+            }
+
+            // Hide "Next" button for the last slide
+            if (e.to === this.querySelectorAll('.carousel-item').length - 1) {
+                nextButton.style.display = 'none';
+            } else {
+                nextButton.style.display = 'block';
+            }
+        });
+    });
+  </script>
+</div>

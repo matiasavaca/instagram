@@ -10,4 +10,8 @@ class Post < ApplicationRecord
   # validates :images, blob: { content_type: ['image/png', 'image/jpg', 'image/jpeg'], message: 'Must be an image format' }
 
   # validates :images, presence: true, blob: { content_type: :images }
+  def last_image
+    images.last
+  end
+
 end

@@ -1,0 +1,9 @@
+<div class="modal-body">
+  <% story.images.each_with_index do |image, index| %>
+    <a href="#" data-bs-toggle="modal" data-bs-target="#story<%=story.id%>ModalToggle">
+      <div class="carousel-item <%= index == 0 ? 'active' : '' %>" style="height: 20rem;">
+        <%= image_tag image, class: "d-block w-100 full-modal-image" %>
+      </div>
+    </a>
+  <% end %>
+</div>

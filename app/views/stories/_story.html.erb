@@ -7,16 +7,13 @@
   </button>
 </div>
 
-
 <!-- Modal -->
 <div class="modal fade" id="storyModal<%= story.id%>" tabindex="-1" aria-labelledby="storyModal<%= story.id%>Label" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       <div class="modal-body">
-        <% story.images.each do |image| %>
-          <%= image_tag image, class: "d-block w-100 full-modal-image" %>
-        <% end %>
+        <%= render 'stories/story_carrousel', story: story %>
       </div>
       <div>
         <%= form_with url: comments_path, method: :post, data: { controller: "comments", action: "turbo:submit-end->comments#clear" } do |f| %>
@@ -37,3 +34,5 @@
     </div>
   </div>
 </div>
+
+

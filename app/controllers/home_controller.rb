@@ -1,9 +1,18 @@
 class HomeController < ApplicationController
   before_action :set_suggestions
   before_action :set_feeds
+  include StoriesHelper
   def index
     @posts = Post.all
     @stories = Story.all
+
+    @last_image_story = Story.first&.last_image
+    
+    @last_images_for_posts = {}
+    @posts.each do |post|
+      @last_images_for_posts[post.id] = post.last_image
+    end
+
 
     if user_signed_in?
       @stories.each do |story|

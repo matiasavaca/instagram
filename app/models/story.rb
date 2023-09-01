@@ -8,4 +8,10 @@ class Story < ApplicationRecord
   def viewers
     story_histories.map(&:user)
   end
+
+  # In post.rb
+  def last_image
+    images.last
+  end
+
 end

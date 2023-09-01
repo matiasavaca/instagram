@@ -1,0 +1,31 @@
+<div id="storycarrousel<%= story.id %>" class="carousel slide">
+  <div class="carousel-inner">
+    <%= render 'stories/story_images', story: story %>
+  </div>
+  <% if story.images.count > 1 %>
+    <button class="carousel-control-prev " type="button" data-bs-target="#storycarrousel<%= story.id %>" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <% if @last_image_story && url_for(story.images.last) != rails_blob_url(@last_image_story) %>
+      <button class="carousel-control-next" type="button"
+          data-bs-target="#storycarrousel<%= story.id %>"
+          data-bs-slide="next"
+          data-last-image="<%= story.images.last %>"
+          data-next-story-id="<%= next_story_id(story.id) %>"
+          onclick="handleNextStory(this)"
+          onmouseover="checkLastImage(this)">
+      <span class="carousel-control-next-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+    <% else %>
+    <% end %>
+  <% end %>
+  <% if story.images.count > 1 %>
+    <div class="carousel-indicators">
+      <% story.images.each_with_index do |image, index| %>
+        <button type="button" data-bs-target="#storycarrousel<%= story.id %>" data-bs-slide-to="<%= index %>" class="bg-dark <%= index== 0 ? 'active' : '' %>" <%= index == 0 ? 'aria-current="true"' : '' %> aria-label="Slide <%=index + 1%>"></button>
+      <% end %>
+    </div>
+  <% end %>
+</div>
