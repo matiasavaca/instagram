@@ -8,13 +8,14 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="storyModal<%= story.id%>" tabindex="-1" aria-labelledby="storyModal<%= story.id%>Label" aria-hidden="true">
+<div class="modal fade" id="storyModal<%= story.id%>" tabindex="-1" aria-labelledby="storyModal<%= story.id%>Label" aria-hidden="true"  >
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content" style="width: 28rem; height: 50rem">
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       <div class="modal-body">
         <%= render 'stories/story_carrousel', story: story %>
       </div>
+      <% unless story.user == current_user %>
       <div>
         <%= form_with url: comments_path, method: :post, data: { controller: "comments", action: "turbo:submit-end->comments#clear" } do |f| %>
           <div class="d-flex">
@@ -24,13 +25,27 @@
           </div>
         <% end %>
       </div>
-
-      <h3>Viewers:</h3>
-        <ul>
-          <% story.viewers.each do |user| %>
-            <li><%= user.username %></li> <!-- replace 'name' with whatever attribute you want to display for the user -->
-          <% end %>
-        </ul>
+      <% end %>
+      <% if story.user == current_user %>
+        <div class="position-absolute bottom-0 w-100" id="collapseContainer">
+          <a class="btn d-block text-center" data-bs-toggle="collapse" href="#collapseExample<%= story.id %>" role="button" aria-expanded="false" aria-controls="collapseExample<%= story.id %>">
+              <i class="fa-solid fa-chevron-down" style="color: #000000;"></i>
+              <i class="fa-solid fa-chevron-up d-none" style="color: #000000;"></i>
+          </a>
+          <div class="collapse" id="collapseExample<%= story.id %>">
+              <h3>Viewers:</h3>
+              <ul>
+                  <% story.viewers.each do |user| %>
+                      <li><%= user.username %></li>
+                  <% end %>
+              </ul>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
+
+
+<script>
+</script>

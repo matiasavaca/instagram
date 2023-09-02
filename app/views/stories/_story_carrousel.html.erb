@@ -1,4 +1,11 @@
 <div id="storycarrousel<%= story.id %>" class="carousel slide">
+<% if story.images.count > 1 %>
+    <div class="carousel-indicators">
+      <% story.images.each_with_index do |image, index| %>
+        <button type="button" data-bs-target="#storycarrousel<%= story.id %>" data-bs-slide-to="<%= index %>" class="bg-dark <%= index== 0 ? 'active' : '' %>" <%= index == 0 ? 'aria-current="true"' : '' %> aria-label="Slide <%=index + 1%>"></button>
+      <% end %>
+    </div>
+  <% end %>
   <div class="carousel-inner">
     <%= render 'stories/story_images', story: story %>
   </div>
@@ -20,13 +27,7 @@
     </button>
     <% end %>
   <% end %>
-  <% if story.images.count > 1 %>
-    <div class="carousel-indicators">
-      <% story.images.each_with_index do |image, index| %>
-        <button type="button" data-bs-target="#storycarrousel<%= story.id %>" data-bs-slide-to="<%= index %>" class="bg-dark <%= index== 0 ? 'active' : '' %>" <%= index == 0 ? 'aria-current="true"' : '' %> aria-label="Slide <%=index + 1%>"></button>
-      <% end %>
-    </div>
-  <% end %>
+
 </div>
 
 <script>
