@@ -1,0 +1,39 @@
+<div class="modal-content m-1" style="width: 20rem; height: 30rem; overflow: hidden">
+  <div class="modal-header">
+    <div class="modal-title">
+      <%= story.user.username %>
+              </div>
+            </div>
+            <div class="modal-body d-flex " style="background-color: #1f1f23">
+              <div id="carouselStoryes<%= story.id %>" class="carousel slide" style="max-width: 100%; max-height: 100%">
+                <div class="carousel-inner">
+                  <% story.images.each_with_index do |story_image, index| %>
+                    <div class="carousel-item <%= 'active' if index == 0 %> justify-content-center w-100">
+                      <%= image_tag story_image, class:"d-block" %>
+                    </div>
+                  <% end %>
+                </div>
+                <!--
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselStoryes<%= story.id %>" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselStoryes<%= story.id %>" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              -->
+              </div>
+            </div>
+              <div class="modal-footer">
+              <%= form_with url: comments_path, method: :post, data: { controller: "comments", action: "turbo:submit-end->comments#clear" } do |f| %>
+                <div class="d-flex">
+                  <%= f.hidden_field :story_id, value: story.id %>
+                  <%= f.text_area :story_message, class: "w-100", placeholder:"Add comment...", style:"border:none; margin: 2rem; resize: none;" %>
+                  <button type="submit" class="text-primary fw-bold me-3" style="background:none; border:none">
+                    <i class="fa-regular fa-paper-plane" style="color: #000000;"></i>
+                  </button>
+                </div>
+              <% end %>
+              </div>
+            </div>

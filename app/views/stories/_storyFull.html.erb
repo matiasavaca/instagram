@@ -1,0 +1,40 @@
+<div class="d-flex flex-column justify-content-center align-items-center">
+  <button type="button" class="btn m-0" data-bs-toggle="modal" data-bs-target="#storyModal<%= story.id%>">
+    <%= image_tag 'profile_picture.jpg', class:"img-thumbnail rounded-circle border-2 border-primary ", style: "width: 3.5rem" %>
+    <div>
+      <small style="max-width:3.5rem; overflow:hidden; white-space:nowrap; text-overflow:ellipsis"><%=story.user.username%></small>
+    </div>
+  </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade overflow-hidden" id="storyModal<%= story.id %>" tabindex="-1" aria-labelledby="storyModalLabel<%= story.id %>" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen bg-dark ">
+    <div class="modal-content">
+      <div class="modal-body d-flex bg-dark justify-content-center align-items-center position-relative">
+      <div style="color:white">
+        <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-2" data-bs-dismiss="modal" aria-label="Close" style="color:white; z-index: 10;"></button>
+      </div>
+        <div id="carouselAllStories" class="carousel slide" style="width: auto; display: flex; overflow-x: scroll;">
+          <div class="d-flex overflow-y-hidden">
+            <% @stories.each_with_index do |story| %>
+              <div class="m-4" style="width: 30rem; height: 35rem;">
+                <%= render 'stories/each_story_images', story: story %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselAllStories" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselAllStories" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

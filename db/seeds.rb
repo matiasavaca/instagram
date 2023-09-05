@@ -13,7 +13,12 @@ User.create(email: "avaca.matias1@gmail.com", full_name: "matias avaca", usernam
 
 User.create(email: "agop123@gmail.com", full_name: "agop chorba", username: "powcito", password: "123456")
 
-
 User.create(email: "carlos@gmail.com", full_name: "carlos avaca", username: "carlitos", password: "123456")
 
+User.create(email: "belen@gmail.com", full_name: "belen avaca", username: "beluavaca", password: "123456")
 
+User.create(email: "cecilia@gmail.com", full_name: "cecilia avaca", username: "ceciturano", password: "123456")
+
+User.create(email: "nico@gmail.com", full_name: "nico repetto", username: "nicorepetto", password: "123456")
+
+User.create(email: "fran@gmail.com", full_name: "fran muslera", username: "franm43", password: "123456")

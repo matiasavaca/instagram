@@ -1,19 +1,7 @@
-<div class="d-flex flex-column justify-content-center align-items-center">
-  <button type="button" class="btn m-0" data-bs-toggle="modal" data-bs-target="#storyModal<%= story.id%>">
-    <%= image_tag 'profile_picture.jpg', class:"img-thumbnail rounded-circle border-2 border-primary ", style: "width: 3.5rem" %>
-    <div>
-      <small style="max-width:3.5rem; overflow:hidden; white-space:nowrap; text-overflow:ellipsis"><%=story.user.username%></small>
-    </div>
-  </button>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="storyModal<%= story.id%>" tabindex="-1" aria-labelledby="storyModal<%= story.id%>Label" aria-hidden="true"  >
-  <div class="modal-dialog">
-    <div class="modal-content" style="width: 28rem; height: 50rem; overflow: hidden">
+<div class="modal-content" style="width: 28rem; height: 50rem; overflow: hidden">
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       <div class="modal-body">
-        <%= render 'stories/story_carrousel', story: story %>
+        <%#= render 'stories/story_carrouselFull', story: story %>
       </div>
       <div class="form-container">
         <% unless story.user == current_user %>
@@ -47,9 +35,3 @@
         </div>
       <% end %>
     </div>
-  </div>
-</div>
-
-
-<script>
-</script>

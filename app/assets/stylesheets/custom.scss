@@ -125,7 +125,6 @@ body {
   flex-direction: column;
   justify-content: space-between;
 }
-
 .modal-body {
   position: relative;
 }
@@ -134,25 +133,47 @@ body {
   overflow: auto;
 }
 
-[id^='storycarrousel'] .carousel-indicators {
+[id^='carouselStories'] .carousel-indicators {
   bottom: auto;
   top: 6px;
   flex-direction: row;
   justify-content: center;
 }
 
-[id^='storycarrousel'] .carousel-indicators button {
+[id^='carouselStories'] .carousel-indicators button {
   width: 10px;
   height: 10px;
   margin-right: 5px;
   margin-left: 5px;
 }
 
-[id^='storycarrousel'].carousel {
+[id^='carouselStories'].carousel {
   position: static !important;
 }
 
-[id^='storycarrousel'] .carousel-indicators {
+[id^='carouselStories'] .carousel-indicators {
   position: static !important;
   top: 0;
+}
+
+[id^='carouselStories'] .carousel-control-prev,
+[id^='carouselStories'] .carousel-control-next {
+  position: absolute;
+  top: 50%; /* Esto centra los botones verticalmente */
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+[id^='carouselStories'] .carousel-control-prev {
+  left: 10px; /* Ajusta este valor si quieres que los botones estén más lejos del borde */
+}
+
+[id^='carouselStories'] .carousel-control-next {
+  right: 10px; /* Ajusta este valor si quieres que los botones estén más lejos del borde */
+}
+
+.form-container {
+  position: absolute;
+  bottom: 5px;
+  width: 100%;
 }

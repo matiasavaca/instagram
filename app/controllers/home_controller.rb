@@ -1,7 +1,9 @@
 class HomeController < ApplicationController
+  before_action :cleanup_old_stories, only: [:index]
   before_action :set_suggestions
   before_action :set_feeds
   include StoriesHelper
+
   def index
     @posts = Post.all
     @stories = Story.all
@@ -22,6 +24,12 @@ class HomeController < ApplicationController
       end
     end
   end
+
+
+  def cleanup_old_stories
+    Story.where("created_at <= ?", 1.hours.ago).destroy_all
+  end
+
 
   def next_user_with_story
     current_story_user_id = params[:current_user_id].to_i
