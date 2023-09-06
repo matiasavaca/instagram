@@ -1,5 +1,5 @@
 <div class="card d-flex flex-row justify-content-center align-items-center gap-3 px-3" style="width:28rem; height: 7rem; overflow-x:scroll; border:none">
-  <% @stories.each do |story| %>
-    <%= render partial: 'stories/storyFull', locals: { story: story } %>
+  <% @stories.each_with_index do |story, index| %>
+    <%= render partial: 'stories/storyFull', locals: { story: story, index: index } %>
   <% end %>
 </div>

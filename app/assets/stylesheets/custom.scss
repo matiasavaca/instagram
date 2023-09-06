@@ -177,3 +177,8 @@ body {
   bottom: 5px;
   width: 100%;
 }
+
+.story-modal-content {
+  transition: width 0.3s ease, height 0.3s ease;
+}
+

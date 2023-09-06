@@ -1,35 +1,66 @@
 <div class="d-flex flex-column justify-content-center align-items-center">
-  <button type="button" class="btn m-0" data-bs-toggle="modal" data-bs-target="#storyModal<%= story.id%>">
-    <%= image_tag 'profile_picture.jpg', class:"img-thumbnail rounded-circle border-2 border-primary ", style: "width: 3.5rem" %>
+  <button type="button" class="btn m-0" data-bs-toggle="modal" data-bs-target="#storyModal<%= story.id %>" data-story-index="<%= index %>">
+    <%= image_tag 'profile_picture.jpg', class: "img-thumbnail rounded-circle border-2 border-primary", style: "width: 3.5rem" %>
     <div>
-      <small style="max-width:3.5rem; overflow:hidden; white-space:nowrap; text-overflow:ellipsis"><%=story.user.username%></small>
+      <small style="max-width:3.5rem; overflow:hidden; white-space:nowrap; text-overflow:ellipsis"><%= story.user.username %></small>
     </div>
   </button>
 </div>
-
 <!-- Modal -->
-<div class="modal fade overflow-hidden" id="storyModal<%= story.id %>" tabindex="-1" aria-labelledby="storyModalLabel<%= story.id %>" aria-hidden="true">
+<div class="modal fade " id="storyModal<%= story.id %>" tabindex="-1" aria-labelledby="storyModalLabel<%= story.id %>" aria-hidden="true">
   <div class="modal-dialog modal-fullscreen bg-dark ">
-    <div class="modal-content">
-      <div class="modal-body d-flex bg-dark justify-content-center align-items-center position-relative">
+    <div class="modal-content ">
+      <div class="modal-body d-flex bg-dark justify-content-center align-items-center position-relative overflow-y-hidden">
       <div style="color:white">
         <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-2" data-bs-dismiss="modal" aria-label="Close" style="color:white; z-index: 10;"></button>
       </div>
-        <div id="carouselAllStories" class="carousel slide" style="width: auto; display: flex; overflow-x: scroll;">
+        <div id="carouselAllStories<%=story.id%>" class="carousel slide" style="width: auto; display: flex; overflow-x: scroll;">
           <div class="d-flex overflow-y-hidden">
-            <% @stories.each_with_index do |story| %>
-              <div class="m-4" style="width: 30rem; height: 35rem;">
-                <%= render 'stories/each_story_images', story: story %>
+            <% @stories.each_with_index do |story, index| %>
+              <div class="m-4 ">
+                <div class="story-modal-content modal-content m-1 rounded"
+                    style="width: <%= index == 0 ? '30rem' : '20rem' %>;
+                            height: <%= index == 0 ? '55rem' : '30rem' %>;
+                            overflow: hidden" id="story<%=story.id%>">
+                  <div class="modal-header">
+                    <div class="modal-title">
+                      <%= story.user.username %>
+                    </div>
+                  </div>
+                  <div class="modal-body" style="background-color: #1f1f23">
+                    <div id="carouselStoryes" class="carousel slide  overflow-y-hidden" style="max-width: 100%; max-height: 100%">
+                      <div class="carousel-inner">
+                        <% story.images.each_with_index do |story_image, index| %>
+                          <div class="carousel-item <%= 'active' if index == 0 %>">
+                            <%= image_tag story_image, class:"d-block w-100" %>
+                          </div>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <%= form_with url: comments_path, method: :post, data: { controller: "comments", action: "turbo:submit-end->comments#clear" } do |f| %>
+                    <div class="d-flex">
+                      <%= f.hidden_field :story_id, value: story.id %>
+                      <%= f.text_area :story_message, class: "w-100", placeholder:"Add comment...", style:"border:none; margin: 2rem; resize: none;" %>
+                      <button type="submit" class="text-primary fw-bold me-3" style="background:none; border:none">
+                        <i class="fa-regular fa-paper-plane" style="color: #000000;"></i>
+                      </button>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+
               </div>
             <% end %>
           </div>
         </div>
         <div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselAllStories" data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselAllStories<%=story.id%>" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselAllStories" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselAllStories<%=story.id%>" data-bs-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
@@ -38,3 +69,58 @@
     </div>
   </div>
 </div>
+
+
+<script>
+$(document).ready(function() {
+
+    // Evento que se dispara cuando se muestra el modal
+    $('[data-bs-toggle="modal"]').on('click', function() {
+        var modalId = $(this).data('bs-target');
+        var storyIndex = $(this).data('story-index');
+
+        console.log("Clicked story index:", storyIndex);
+        console.log("Target modal ID:", modalId);
+
+        // Restablece todos los tamaños de las historias
+        $(modalId + ' .story-modal-content').css({ 'width': '20rem', 'height': '30rem' });
+
+        // Establece el tamaño grande para la historia seleccionada
+        var storyToShow = $(modalId + ' .story-modal-content').eq(storyIndex);
+        storyToShow.css({ 'width': '30rem', 'height': '55rem' });
+
+        console.log("Resized story to be shown in big size.");
+
+        var carousel = $(modalId + ' .carousel');
+        carousel.find('.carousel-item').removeClass('active');
+        carousel.find('.carousel-item').eq(storyIndex).addClass('active');
+
+        console.log("Set the clicked story as active.");
+    });
+
+    // Evento que se dispara cuando el carrusel se desliza de un ítem a otro
+    $('.carousel').on('slide.bs.carousel', function(event) {
+        // Restablece los estilos para todas las historias
+        $('.story-modal-content').css({ 'width': '20rem', 'height': '30rem' });
+
+        console.log("Reset all story sizes.");
+
+        // Modifica los estilos para la próxima historia activa
+        var nextActiveCarouselItem = $(event.relatedTarget);
+        var storyContent = nextActiveCarouselItem.closest('.story-modal-content');
+        storyContent.css({ 'width': '30rem', 'height': '55rem' });
+
+        console.log("Resized next story to be shown in big size.");
+    });
+
+    // Evento que se dispara cuando se cierra el modal
+    $('.modal').on('hidden.bs.modal', function () {
+        var carousel = $(this).find('.carousel');
+        carousel.carousel(0);  // Reiniciar el carrusel a la primera historia
+        carousel.find('.carousel-item').removeClass('active'); // Eliminar la clase active de todos los ítems
+
+        console.log("Reset carousel to the first story and removed active class.");
+    });
+});
+
+</script>
